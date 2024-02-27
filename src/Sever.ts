@@ -1,0 +1,24 @@
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+import dotevn from "dotenv";
+import cors from "cors";
+import express from "express";
+import session from "express-session";
+import logger from "morgan";
+import passport from "passport";
+import initRouter from "./router";
+require("./middleweare/loginByGoogle");
+dotevn.config();
+const app = express();
+const port = process.env.PORT_SEVER || 3000;
+app.use(express.json());
+app.use(cookieParser());
+app.use(session({ secret: "cats" }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(cors());
+app.use(logger("dev"));
+initRouter(app);
+app.listen(port, () => {
+  console.log("app run at", port);
+});
