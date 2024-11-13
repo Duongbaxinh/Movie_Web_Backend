@@ -20,20 +20,19 @@ exports.controllerUser = {
         const { message, success } = yield sevice_1.handleUser.register(req.body);
         res.status(200).json({
             success,
-            message
+            message,
         });
     })),
     login: (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { success, message, accessToken, user, refreshToken } = yield sevice_1.handleUser.login(req.body);
-        res.cookie('refreshToken', '12345');
-        const co = req.cookies.refreshToken;
-        console.log(co);
+        // res.cookie('refreshToken', '12345');
+        // const co = req.cookies.refreshToken
+        // console.log(co)
         res.status(200).json({
             success,
             message,
-            response: user,
+            user,
             accessToken,
-            co
         });
     })),
     logOut: (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -41,7 +40,7 @@ exports.controllerUser = {
         console.log("refreshToken", cookieData.refreshToken);
         if (cookieData && cookieData.refreshToken) {
             const { success, message } = yield sevice_1.handleUser.logOut(cookieData.refreshToken);
-            res.clearCookie('refreshToken', { httpOnly: true });
+            res.clearCookie("refreshToken", { httpOnly: true });
             res.status(200).json({
                 success,
                 message,
@@ -50,8 +49,14 @@ exports.controllerUser = {
         else {
             res.status(200).json({
                 success: false,
-                message: "you haven't login"
+                message: "you haven't login",
             });
         }
-    }))
+    })),
+    getUser: (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        const data = yield sevice_1.handleUser.getUsers();
+        res.status(200).json({
+            data: data,
+        });
+    })),
 };

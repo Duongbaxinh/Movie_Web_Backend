@@ -29,92 +29,82 @@ exports.seri = {
     getSeri: () => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const data = yield models_1.default.Seri.findAll({
-                include: [{
-                        model: models_1.default.Movie,
-                    }],
+                include: [{ model: models_1.default.Movie }],
             });
-            return ({
+            console.log("check data seris", data);
+            return {
                 success: data ? true : false,
-                data: data ? data : null
-            });
+                data: data ? data : null,
+            };
         }
         catch (error) {
-            return ({
+            return {
                 success: false,
-                message: error
-            });
+                message: error,
+            };
         }
     }),
     getSeriById: (id) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const data = yield models_1.default.Seri.findOne({
                 where: { id: id },
-                include: [{
+                include: [
+                    {
                         model: models_1.default.Movie,
-                    }],
+                    },
+                ],
             });
-            return ({
+            return {
                 success: data ? true : false,
-                data: data ? data : null
-            });
+                data: data ? data : null,
+            };
         }
         catch (error) {
-            return ({
+            return {
                 success: false,
-                error: error
-            });
+                error: error,
+            };
         }
     }),
     addSeri: (_a) => __awaiter(void 0, void 0, void 0, function* () {
         var { fileName } = _a, data = __rest(_a, ["fileName"]);
+        console.log("check file Name", data);
         try {
-            console.log('check file name', fileName);
-            const findSeri = yield models_1.default.Seri.findOne({ where: { title: data.title } });
-            if (!findSeri && fileName) {
-                const newSeri = yield models_1.default.Seri.create(Object.assign({}, data));
-                for (let i in fileName[0]) {
-                    const { typeOf, name } = fileName[0][i];
-                    yield models_1.default.FileSeri.create({ seri_id: newSeri.id, image: name, typeOf: typeOf });
-                }
-            }
-            return ({
-                success: exports.seri ? true : false,
-                message: exports.seri ? "Seri was added successfull" : 'seri had in database'
-            });
+            const newSeri = yield models_1.default.Seri.create(Object.assign({}, data));
+            if (!newSeri)
+                throw Error("something went wrong");
+            return "ok";
         }
         catch (error) {
-            return ({
-                cussess: false,
-                error: error
-            });
+            console.log(error);
         }
     }),
     updateSeri: (_b) => __awaiter(void 0, void 0, void 0, function* () {
         var { id } = _b, data = __rest(_b, ["id"]);
         try {
-            console.log('id', id);
+            console.log("id", id);
             yield models_1.default.Seri.update(Object.assign({}, data), { where: { id: id } });
-            return ({
-                message: "updated successfull"
-            });
+            return {
+                message: "updated successfull",
+            };
         }
         catch (error) {
-            return ({
-                error: error
-            });
+            return {
+                error: error,
+            };
         }
     }),
     deleteSeri: (id) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             yield models_1.default.Seri.destroy({ where: { id: id } });
-            return ({
-                message: 'seri was deleted'
-            });
+            return {
+                message: "seri was deleted",
+            };
         }
         catch (error) {
-            return ({
-                error: error
-            });
+            return {
+                error: error,
+            };
         }
-    })
+    }),
 };

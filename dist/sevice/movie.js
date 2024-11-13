@@ -40,152 +40,82 @@ exports.handleMovie = {
             const { count, rows } = yield Movie.findAndCountAll(Object.assign(Object.assign({ where: Object.assign({}, queryCondition) }, queryOptions), { attributes: {
                     exclude: ["createdAt", "updatedAt"],
                 } }));
-            return ({
+            return {
                 message: count,
                 data: rows,
-            });
+            };
         }
         catch (error) {
-            return ({
+            return {
                 message: error,
-            });
+            };
         }
     }),
     getAllMovie: () => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const data = yield Movie.findAll({
-            // include: [
-            //   { model: db.Seri, as: "seriData", },
-            //   { model: db.FileImage, attributes: ['image'] },
-            //   { model: db.FileVideo, attributes: ['video'] }]
-            });
-            return ({
+            const data = yield Movie.findAll();
+            return {
                 mressage: "sucessfull",
                 data: data,
-            });
+            };
         }
         catch (error) {
-            return ({
+            console.log(error);
+            return {
                 mess: error,
-            });
+            };
         }
     }),
     getMovieById: (id) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const data = yield Movie.findOne({
                 where: { id: id },
-                // include: [{
-                // model: db.FileImage, attributes: ['name']
-                // model: db.Country,
-                // attributes: ["name"],
-                // through: { attributes: [] },
-                // }, { model: db.FileVideo }],
+                include: [{ model: models_1.default.Seri, as: "seriData", attributes: ["title"] }],
             });
-            return ({
+            return {
                 success: true,
                 data: data,
-            });
+            };
         }
         catch (error) {
-            return ({
-                message: "false",
-                error: error,
-            });
+            console.log(error);
+            throw new Error("get movie by id falure");
         }
     }),
     addMovie: (_a, files) => __awaiter(void 0, void 0, void 0, function* () {
         var { fileName } = _a, data = __rest(_a, ["fileName"]);
         try {
+            let createMovie;
             const movie = yield Movie.findOne({ where: { name: data.name } });
-            if (!movie && fileName) {
-                const newMovie = yield Movie.create(Object.assign({}, data));
-                for (let i in fileName[0]) {
-                    const { type, typeOf, name } = fileName[0][i];
-                    if (name && type === 'video') {
-                        yield FileVideo.create({ movie_Id: newMovie.id, video: fileName[0][i].name, typeOf: typeOf });
-                    }
-                    if (name && type === 'image') {
-                        yield FileImage.create({ movie_Id: newMovie.id, image: name, typeOf: typeOf });
-                    }
-                }
-                return ({
-                    success: newMovie ? true : false,
-                    message: newMovie ? "a movie created" : 'movie had in database',
-                });
+            if (!movie) {
+                createMovie = yield Movie.create(Object.assign({}, data));
+                if (!createMovie)
+                    throw new Error("something went wrong");
             }
-            if (movie && fileName) {
-                for (let i in fileName[0]) {
-                    const { type, name } = fileName[0][i];
-                    if (name) {
-                        (0, handleDeleteFile_1.handleDeleteFile)(name, type);
-                    }
-                }
-                return ({
-                    success: false,
-                    message: 'movie had in database',
-                });
-            }
+            return {
+                status: createMovie ? "success" : "falure",
+                data: createMovie,
+            };
         }
         catch (error) {
-            if (error && fileName) {
-                for (let i in fileName[0]) {
-                    const { type, name } = fileName[0][i];
-                    if (name) {
-                        (0, handleDeleteFile_1.handleDeleteFile)(name, type);
-                    }
-                }
-                return ({
-                    success: false,
-                    message: error,
-                });
-            }
+            console.log(error);
         }
     }),
-    updateFilm: (_b) => __awaiter(void 0, void 0, void 0, function* () {
+    updateFilm: (_b, id) => __awaiter(void 0, void 0, void 0, function* () {
         var { fileName } = _b, data = __rest(_b, ["fileName"]);
-        /**const fileName = [{
-          video: { type: 'video', typeOf: 'video', name: '' },
-          avatar: { type: 'image', typeOf: 'avatar', name: '' },
-          trailler: { type: 'video', typeOf: 'trailler', name: '' }
-        }]*/
+        console.log("check id film", id);
         try {
-            const updeateMovie = yield Movie.update(Object.assign({}, data), { where: { id: data.id } });
-            if (updeateMovie && fileName) {
-                for (let i in fileName[0]) {
-                    const { type, typeOf, name } = fileName[0][i];
-                    if (name !== '' && type === 'video') {
-                        const fileNameVideo = yield FileVideo.findOne({ where: { movie_Id: data.id, typeOf: typeOf } });
-                        if (fileNameVideo) {
-                            const updateMovie = yield FileVideo.update({ video: name }, { where: { id: fileNameVideo.id, typeOf: typeOf } });
-                            if (updateMovie) {
-                                (0, handleDeleteFile_1.handleDeleteFile)(fileNameVideo.video, type);
-                            }
-                        }
-                        else {
-                            yield FileVideo.create({ movie_Id: data.id, video: name, typeOf: typeOf });
-                        }
-                    }
-                    if (name !== '' && type === 'image') {
-                        const fileNameImage = yield FileImage.findOne({ where: { movie_Id: data.id, typeOf: typeOf } });
-                        if (fileNameImage) {
-                            const updateImage = FileImage.update({ image: name }, { where: { id: fileNameImage.id, typeOf: typeOf } });
-                            if (updateImage) {
-                                (0, handleDeleteFile_1.handleDeleteFile)(fileNameImage.image, type);
-                            }
-                        }
-                        else {
-                            yield FileImage.create({ movie_Id: data.id, image: name, typeOf: typeOf });
-                        }
-                    }
-                }
-                return ({
-                    success: true,
-                    message: 'movie was updated',
-                });
-            }
+            const existedMovie = yield Movie.findOne({ where: { id: id } });
+            if (!existedMovie)
+                throw Error("find movie falure");
+            console.log("existed movie", existedMovie.id);
+            yield Movie.update(Object.assign({}, data), { where: { id: id } });
+            return {
+                status: "ok",
+            };
         }
         catch (error) {
-            return ({ message: error, });
+            return { message: error };
         }
     }),
     deleteMovie: (id) => __awaiter(void 0, void 0, void 0, function* () {
@@ -194,15 +124,15 @@ exports.handleMovie = {
             if (movie) {
                 yield Movie.destroy({ where: { id: id } });
                 const [fileVideo, fileImage] = yield Promise.all([
-                    FileImage.findAll({ where: { movie_Id: id }, attributes: ['image'] }),
-                    FileVideo.findAll({ where: { movie_Id: id }, attributes: ['video'] })
+                    FileImage.findAll({ where: { movie_Id: id }, attributes: ["image"] }),
+                    FileVideo.findAll({ where: { movie_Id: id }, attributes: ["video"] }),
                 ]);
                 yield Promise.all([
                     FileImage.destroy({ where: { movie_Id: id } }),
                     FileVideo.destroy({ where: { movie_Id: id } }),
                 ]);
                 const fileAll = [...fileVideo, ...fileImage];
-                yield Promise.all(fileAll.map((item) => {
+                Promise.all(fileAll.map((item) => {
                     if (Object.values(item.dataValues)[0]) {
                         (0, handleDeleteFile_1.handleDeleteFile)(Object.values(item.dataValues)[0], Object.keys(item.dataValues)[0]);
                     }
@@ -210,7 +140,7 @@ exports.handleMovie = {
                 return {
                     success: true,
                     message: "a movie was deleted",
-                    data: fileAll
+                    data: fileAll,
                 };
             }
             return {
@@ -224,5 +154,5 @@ exports.handleMovie = {
                 message: error,
             };
         }
-    })
+    }),
 };

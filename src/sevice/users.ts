@@ -32,6 +32,7 @@ export const handleUser = {
   login: ({ password, email }: { password: string; email: string }) =>
     new Promise(async (resolve: any, reject: any) => {
       try {
+        console.log("check username and password :::: ", password, email);
         const user = await User.findOne({ where: { email: email } });
         if (user) {
           const isChecked = bcrypt.compareSync(password, user.password);

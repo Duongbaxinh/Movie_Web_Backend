@@ -15,45 +15,44 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.conTrollerSeri = void 0;
 const sevice_1 = require("../sevice");
 const models_1 = __importDefault(require("../models"));
-const seridata = require('./seridata.json');
+const seridata = require("./seridata.json");
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 exports.conTrollerSeri = {
     getSeri: (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { data } = yield sevice_1.seri.getSeri();
         res.status(200).json({
-            response: data
+            metadata: data,
         });
     })),
     insertSeri: (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         seridata.map((item) => __awaiter(void 0, void 0, void 0, function* () {
-            console.log("dfsfds", item);
             yield models_1.default.Seri.create(Object.assign({}, item));
         }));
-        res.send('sucess ');
+        res.send("sucess ");
     })),
     getSeriById: (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log('params', req.params.id);
+        console.log("params", req.params.id);
         const { data, success } = yield sevice_1.seri.getSeriById(req.params.id);
         res.status(200).json({
-            response: data
+            metadata: data,
         });
     })),
     addSeri: (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield sevice_1.seri.addSeri(req.body);
+        const metadata = yield sevice_1.seri.addSeri(req.body);
         res.status(200).json({
-            response
+            metadata,
         });
     })),
     updateSeri: (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield sevice_1.seri.updateSeri(req.body);
+        const metadata = yield sevice_1.seri.updateSeri(req.body);
         res.status(200).json({
-            response
+            metadata,
         });
     })),
     deleteSeri: (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { data } = yield sevice_1.seri.deleteSeri(req.query.id);
         res.status(200).json({
-            data
+            data,
         });
-    }))
+    })),
 };

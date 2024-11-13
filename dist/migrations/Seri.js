@@ -34,6 +34,12 @@ module.exports = {
                     type: Sequelize.INTEGER
                 },
                 description: {
+                    type: Sequelize.STRING(2000)
+                },
+                release: { type: Sequelize.STRING },
+                author: { type: Sequelize.STRING },
+                actor: { type: Sequelize.STRING },
+                dubbing: {
                     type: Sequelize.STRING
                 },
                 numberOfseson: {
@@ -42,13 +48,10 @@ module.exports = {
                 banner: {
                     type: Sequelize.STRING
                 },
-                thumbai: {
+                thumbnail: {
                     type: Sequelize.STRING
                 },
-                main: {
-                    type: Sequelize.STRING
-                },
-                filename: {
+                avatar: {
                     type: Sequelize.STRING
                 },
                 createdAt: {

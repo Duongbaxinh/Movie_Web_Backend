@@ -12,42 +12,45 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 module.exports = {
     up(queryInterface, Sequelize) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield queryInterface.createTable('Movies', {
+            yield queryInterface.createTable('comments', {
                 id: {
+                    type: Sequelize.INTEGER,
                     allowNull: false,
-                    primaryKey: true,
                     autoIncrement: true,
-                    type: Sequelize.INTEGER
+                    primaryKey: true
                 },
-                name: { type: Sequelize.STRING },
-                genre: { type: Sequelize.STRING },
-                chapter: { type: Sequelize.STRING },
-                dubbing: { type: Sequelize.STRING },
-                price: { type: Sequelize.FLOAT },
-                release: { type: Sequelize.FLOAT },
-                rating: { type: Sequelize.INTEGER },
-                description: { type: Sequelize.STRING },
-                seri_id: { type: Sequelize.STRING },
-                author: { type: Sequelize.STRING },
-                actor: { type: Sequelize.STRING },
-                time: { type: Sequelize.INTEGER },
-                avatar: { type: Sequelize.STRING },
+                userId: {
+                    type: Sequelize.INTEGER,
+                    allowNull: false
+                },
+                MovieId: {
+                    type: Sequelize.INTEGER,
+                },
+                SeriId: {
+                    type: Sequelize.STRING,
+                },
+                content: {
+                    type: Sequelize.STRING,
+                    allowNull: false
+                },
+                image: {
+                    type: Sequelize.STRING
+                },
                 video: { type: Sequelize.STRING },
-                trailler: { type: Sequelize.STRING },
                 createdAt: {
-                    allowNull: false,
-                    type: Sequelize.DATE
+                    type: Sequelize.DATE,
+                    allowNull: false
                 },
                 updatedAt: {
-                    allowNull: false,
-                    type: Sequelize.DATE
+                    type: Sequelize.DATE,
+                    allowNull: false
                 }
             });
         });
     },
     down(queryInterface, Sequelize) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield queryInterface.dropTable('Movies');
+            yield queryInterface.dropTable('comments');
         });
     }
 };

@@ -27,7 +27,6 @@ exports.seri = void 0;
 const models_1 = __importDefault(require("../models"));
 exports.seri = {
     getSeri: () => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("run at here");
         try {
             const data = yield models_1.default.Seri.findAll({
                 include: [{ model: models_1.default.Movie }],

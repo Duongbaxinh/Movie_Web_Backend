@@ -4,15 +4,17 @@ import db from "../models";
 import asyncHandler from "express-async-handler";
 export const ControllerMovie = {
   searchMovie: asyncHandler(async (req: any, res: any) => {
+    console.log("chkkkk::::", req.query);
     const { data }: any = await handleMovie.searchFilm(req.query);
     res.status(200).json({
-      response: data,
+      metadata: data,
     });
   }),
   getAllMovie: asyncHandler(async (req: any, res: any) => {
     const { data }: any = await handleMovie.getAllMovie();
+    console.log("check data movie", data);
     res.status(200).json({
-      response: data,
+      metadata: data,
     });
   }),
   getMovieByPk: asyncHandler(async (req: any, res: any) => {
@@ -21,7 +23,7 @@ export const ControllerMovie = {
     );
     res.status(200).json({
       success,
-      response: data,
+      metadata: data,
     });
   }),
   createMovie: asyncHandler(async (req: any, res: any) => {

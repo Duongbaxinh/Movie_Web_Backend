@@ -53,14 +53,21 @@ exports.handleUser = {
                 const isChecked = bcrypt_1.default.compareSync(password, user.password);
                 if (isChecked) {
                     const _a = user.dataValues, { password, refreshToken, createdAt, updatedAt } = _a, rest = __rest(_a, ["password", "refreshToken", "createdAt", "updatedAt"]);
-                    const refreshTokens = jsonwebtoken_1.default.sign(Object.assign({}, rest), process.env.KEY_JWT, { expiresIn: '2d' });
-                    yield User.update({ refreshToken: refreshTokens }, { where: { email: user.email } });
+                    // const refreshTokens = Jwt.sign({ ...rest }, process.env.KEY_JWT!, {
+                    //   expiresIn: "2d",
+                    // });
+                    // await User.update(
+                    //   { refreshToken: refreshTokens },
+                    //   { where: { email: user.email } }
+                    // );
                     resolve({
                         message: "login successfull",
                         success: true,
                         user: rest,
-                        accessToken: jsonwebtoken_1.default.sign(Object.assign({}, rest), process.env.KEY_JWT, { expiresIn: "2h" }),
-                        refreshToken: refreshTokens
+                        accessToken: yield jsonwebtoken_1.default.sign(Object.assign({}, rest), process.env.KEY_JWT, {
+                            expiresIn: "2h",
+                        }),
+                        //   refreshToken: refreshTokens,
                     });
                 }
                 resolve({
@@ -80,6 +87,7 @@ exports.handleUser = {
             }
         }
         catch (error) {
+            console.log(error);
             reject({
                 message: false,
             });
@@ -88,17 +96,31 @@ exports.handleUser = {
     logOut: (refreshToken) => new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const up = yield User.update({ refreshToken: null }, { where: { refreshToken: refreshToken } });
-            console.log('dskjfsfsf', up);
+            console.log("dskjfsfsf", up);
             resolve({
                 success: true,
-                message: "you logouted"
+                message: "you logouted",
             });
         }
         catch (error) {
             reject({
                 success: false,
-                message: "something went wrong"
+                message: "something went wrong",
             });
         }
-    }))
+    })),
+    getUsers: () => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const data = yield models_1.default.User.findAll({});
+            return {
+                data: data,
+            };
+        }
+        catch (error) {
+            console.log(error);
+            return {
+                error,
+            };
+        }
+    }),
 };

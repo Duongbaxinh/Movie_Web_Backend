@@ -11,6 +11,7 @@ const controller_1 = require("../controller");
 const route = (0, express_1.Router)();
 route.use((0, cookie_parser_1.default)());
 route.use(body_parser_1.default.json());
+route.get('/users', controller_1.controllerUser.getUser);
 route.post('/users/register', controller_1.controllerUser.register);
 route.post('/users/login', controller_1.controllerUser.login);
 route.get('/users/logout', controller_1.controllerUser.logOut);

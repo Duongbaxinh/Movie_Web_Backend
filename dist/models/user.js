@@ -8,6 +8,12 @@ module.exports = (sequelize, DataTypes) => {
                 targetKey: "code",
                 as: "roleData",
             });
+            // User.hasMany(models.Comment, {
+            //   foreignKey: 'userId'
+            // })
+            User.belongsToMany(models.Movie, {
+                through: models.Comment
+            });
         }
     }
     User.init({

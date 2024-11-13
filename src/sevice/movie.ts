@@ -25,6 +25,7 @@ interface queryMovies {
 }
 export const handleMovie = {
   searchFilm: async ({ name, limit, ofset }: queryMovies) => {
+    console.log("check name movie ::: ", name);
     try {
       const queryOptions: any = { raw: true, nest: true };
       const queryCondition: any = {};

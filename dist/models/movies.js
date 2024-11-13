@@ -1,36 +1,33 @@
-'use strict';
+"use strict";
 const sequelize_1 = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
     class Movie extends sequelize_1.Model {
         static associate(models) {
-            Movie.belongsToMany(models.Country, {
-                through: models.MovieCountry
+            Movie.belongsToMany(models.User, {
+                through: models.Comment,
             });
             Movie.belongsTo(models.Seri, {
                 foreignKey: "seri_id",
-                as: "seriData"
+                as: "seriData",
             });
             Movie.hasMany(models.FileVideo, {
-                foreignKey: 'movie_Id'
+                foreignKey: "movie_Id",
             });
             Movie.hasMany(models.FileImage, {
-                foreignKey: 'movie_Id'
+                foreignKey: "movie_Id",
             });
         }
     }
     Movie.init({
-        mainName: {
-            type: DataTypes.STRING
-        },
         name: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
         },
         genre: { type: DataTypes.STRING },
         chapter: { type: DataTypes.STRING },
         dubbing: { type: DataTypes.STRING },
         price: { type: DataTypes.FLOAT },
-        release: { type: DataTypes.FLOAT },
         rating: { type: DataTypes.INTEGER },
+        release: { type: DataTypes.FLOAT },
         description: { type: DataTypes.STRING },
         seri_id: { type: DataTypes.STRING },
         author: { type: DataTypes.STRING },
@@ -41,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
         trailler: { type: DataTypes.STRING },
     }, {
         sequelize,
-        modelName: "Movie"
+        modelName: "Movie",
     });
     return Movie;
 };

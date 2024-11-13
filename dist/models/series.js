@@ -1,48 +1,54 @@
 "use strict";
-'use stric';
+"use stric";
 const sequelize_1 = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
     class Seri extends sequelize_1.Model {
         static associate(models) {
             Seri.hasMany(models.Movie, {
-                foreignKey: "seri_id"
+                foreignKey: "seri_id",
             });
         }
     }
     Seri.init({
         title: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
         },
         genre: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
         },
         rating: {
-            type: DataTypes.FLOAT
+            type: DataTypes.FLOAT,
         },
         yearStated: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
         },
         yearEnded: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
         },
         description: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+        },
+        dubbing: {
+            type: DataTypes.STRING,
         },
         numberOfseson: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
         },
+        release: { type: DataTypes.STRING },
+        author: { type: DataTypes.STRING },
+        actor: { type: DataTypes.STRING },
         banner: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
         },
-        thumbai: {
-            type: DataTypes.STRING
+        thumbnail: {
+            type: DataTypes.STRING,
         },
-        main: {
-            type: DataTypes.STRING
-        }
+        avatar: {
+            type: DataTypes.STRING,
+        },
     }, {
         sequelize,
-        modelName: "Seri"
+        modelName: "Seri",
     });
     return Seri;
 };

@@ -19,6 +19,7 @@ export const seri = {
       const data = await db.Seri.findAll({
         include: [{ model: db.Movie as "seriData" }],
       });
+      console.log("check data seris", data);
       return {
         success: data ? true : false,
         data: data ? data : null,

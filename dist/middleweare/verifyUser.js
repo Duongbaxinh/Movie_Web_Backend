@@ -17,11 +17,24 @@ const express_async_handler_1 = __importDefault(require("express-async-handler")
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 exports.verifyUser = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const authentication = yield req.headers.authorization;
-    const token = yield authentication.split(' ')[1];
-    jsonwebtoken_1.default.verify(token, process.env.KEY_JWT, (err, user) => {
-        if (err instanceof jsonwebtoken_1.default.TokenExpiredError) {
-            res.send("token expired");
-        }
-        user ? next() : res.send("invalide token");
-    });
+    if (authentication) {
+        const token = yield authentication.split(" ")[1];
+        jsonwebtoken_1.default.verify(token, process.env.KEY_JWT, (err, user) => {
+            if (err instanceof jsonwebtoken_1.default.TokenExpiredError) {
+                res.status(401).json({
+                    err: "token_expired",
+                });
+            }
+            user
+                ? next()
+                : res.status(401).json({
+                    message: "token valide",
+                });
+        });
+    }
+    else {
+        res.status(401).json({
+            err: "Unauthentication",
+        });
+    }
 }));

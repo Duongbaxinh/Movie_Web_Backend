@@ -17,3 +17,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./movie"), exports);
 __exportStar(require("./users"), exports);
 __exportStar(require("./seri"), exports);
+__exportStar(require("./comment"), exports);
