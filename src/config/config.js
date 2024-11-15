@@ -1,6 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
-
+require("dotenv").config();
 module.exports = {
   development: {
     username: "root",
@@ -10,12 +8,19 @@ module.exports = {
     dialect: "mysql",
     logging: false,
   },
+  test: {
+    username: "root",
+    password: null,
+    database: "database_test",
+    host: "127.0.0.1",
+    dialect: "mysql",
+  },
   production: {
-    username: process.env.DB_PROD_USER || "avnadmind",
+    username: "avnadmind" || process.env.DB_PROD_USER,
     password: process.env.DB_PROD_PASS,
-    database: process.env.DB_PROD_NAME || "defaultdb",
+    database: "defaultdb" || process.env.DB_PROD_NAME,
     host: process.env.DB_PROD_HOST,
-    port: process.env.DB_PROD_PORT || 13252,
+    port: 13252 || process.env.DB_PROD_PORT,
     dialect: "mysql",
     logging: console.log,
   },

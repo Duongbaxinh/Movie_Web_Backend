@@ -39,7 +39,7 @@ export = (sequelize: Sequelize, DataTypes: any) => {
       Movie.belongsToMany(models.User, {
         through: models.Comment,
       });
-      Movie.belongsTo(models.Seri, {
+      Movie.belongsTo(models.Series, {
         foreignKey: "seri_id",
         as: "seriData",
       });

@@ -71,7 +71,7 @@ exports.handleMovie = {
         try {
             const data = yield Movie.findOne({
                 where: { id: id },
-                include: [{ model: models_1.default.Seri, as: "seriData", attributes: ["title"] }],
+                include: [{ model: models_1.default.Series, as: "seriData", attributes: ["title"] }],
             });
             return {
                 success: true,

@@ -11,7 +11,7 @@ export const conTrollerSeri = {
   }),
   insertSeri: asyncHandler(async (req: any, res: any) => {
     seridata.map(async (item: any) => {
-      await db.Seri.create({ ...item });
+      await db.Series.create({ ...item });
     });
     res.send("sucess ");
   }),

@@ -28,7 +28,7 @@ const models_1 = __importDefault(require("../models"));
 exports.seri = {
     getSeri: () => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const data = yield models_1.default.Seri.findAll({
+            const data = yield models_1.default.Series.findAll({
                 include: [{ model: models_1.default.Movie }],
             });
             console.log("check data seris", data);
@@ -46,7 +46,7 @@ exports.seri = {
     }),
     getSeriById: (id) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const data = yield models_1.default.Seri.findOne({
+            const data = yield models_1.default.Series.findOne({
                 where: { id: id },
                 include: [
                     {
@@ -70,7 +70,7 @@ exports.seri = {
         var { fileName } = _a, data = __rest(_a, ["fileName"]);
         console.log("check file Name", data);
         try {
-            const newSeri = yield models_1.default.Seri.create(Object.assign({}, data));
+            const newSeri = yield models_1.default.Series.create(Object.assign({}, data));
             if (!newSeri)
                 throw Error("something went wrong");
             return "ok";
@@ -83,7 +83,7 @@ exports.seri = {
         var { id } = _b, data = __rest(_b, ["id"]);
         try {
             console.log("id", id);
-            yield models_1.default.Seri.update(Object.assign({}, data), { where: { id: id } });
+            yield models_1.default.Series.update(Object.assign({}, data), { where: { id: id } });
             return {
                 message: "updated successfull",
             };
@@ -96,7 +96,7 @@ exports.seri = {
     }),
     deleteSeri: (id) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            yield models_1.default.Seri.destroy({ where: { id: id } });
+            yield models_1.default.Series.destroy({ where: { id: id } });
             return {
                 message: "seri was deleted",
             };

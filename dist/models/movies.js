@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
             Movie.belongsToMany(models.User, {
                 through: models.Comment,
             });
-            Movie.belongsTo(models.Seri, {
+            Movie.belongsTo(models.Series, {
                 foreignKey: "seri_id",
                 as: "seriData",
             });
