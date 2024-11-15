@@ -26,7 +26,7 @@ exports.conTrollerSeri = {
     })),
     insertSeri: (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         seridata.map((item) => __awaiter(void 0, void 0, void 0, function* () {
-            yield models_1.default.Seri.create(Object.assign({}, item));
+            yield models_1.default.Series.create(Object.assign({}, item));
         }));
         res.send("sucess ");
     })),

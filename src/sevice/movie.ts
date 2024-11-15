@@ -68,7 +68,7 @@ export const handleMovie = {
     try {
       const data = await Movie.findOne({
         where: { id: id },
-        include: [{ model: db.Seri, as: "seriData", attributes: ["title"] }],
+        include: [{ model: db.Series, as: "seriData", attributes: ["title"] }],
       });
       return {
         success: true,

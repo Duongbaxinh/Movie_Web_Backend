@@ -16,7 +16,7 @@ interface typeOfSeri {
 export const seri = {
   getSeri: async () => {
     try {
-      const data = await db.Seri.findAll({
+      const data = await db.Series.findAll({
         include: [{ model: db.Movie as "seriData" }],
       });
       console.log("check data seris", data);
@@ -33,7 +33,7 @@ export const seri = {
   },
   getSeriById: async (id: string) => {
     try {
-      const data = await db.Seri.findOne({
+      const data = await db.Series.findOne({
         where: { id: id },
         include: [
           {
@@ -55,7 +55,7 @@ export const seri = {
   addSeri: async ({ fileName, ...data }: typeOfSeri) => {
     console.log("check file Name", data);
     try {
-      const newSeri = await db.Seri.create({ ...data });
+      const newSeri = await db.Series.create({ ...data });
       if (!newSeri) throw Error("something went wrong");
       return "ok";
     } catch (error) {
@@ -65,7 +65,7 @@ export const seri = {
   updateSeri: async ({ id, ...data }: typeOfSeri) => {
     try {
       console.log("id", id);
-      await db.Seri.update({ ...data }, { where: { id: id } });
+      await db.Series.update({ ...data }, { where: { id: id } });
       return {
         message: "updated successfull",
       };
@@ -77,7 +77,7 @@ export const seri = {
   },
   deleteSeri: async (id: number) => {
     try {
-      await db.Seri.destroy({ where: { id: id } });
+      await db.Series.destroy({ where: { id: id } });
       return {
         message: "seri was deleted",
       };

@@ -17,7 +17,7 @@ interface typeData {
   actor: string;
 }
 export = (sequelize: Sequelize, DataTypes: any) => {
-  class Seri extends Model<typeData> implements typeData {
+  class Series extends Model<typeData> implements typeData {
     title!: string;
     genre!: string;
     rating!: number;
@@ -33,12 +33,12 @@ export = (sequelize: Sequelize, DataTypes: any) => {
     thumbnail!: string;
     avatar!: string;
     static associate(models: any) {
-      Seri.hasMany(models.Movie, {
+      Series.hasMany(models.Movie, {
         foreignKey: "seri_id",
       });
     }
   }
-  Seri.init(
+  Series.init(
     {
       title: {
         type: DataTypes.STRING,
@@ -79,8 +79,9 @@ export = (sequelize: Sequelize, DataTypes: any) => {
     },
     {
       sequelize,
-      modelName: "Seri",
+      modelName: "Series",
+      tableName: "Series",
     }
   );
-  return Seri;
+  return Series;
 };

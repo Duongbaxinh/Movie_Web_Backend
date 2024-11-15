@@ -2,14 +2,14 @@
 "use stric";
 const sequelize_1 = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-    class Seri extends sequelize_1.Model {
+    class Series extends sequelize_1.Model {
         static associate(models) {
-            Seri.hasMany(models.Movie, {
+            Series.hasMany(models.Movie, {
                 foreignKey: "seri_id",
             });
         }
     }
-    Seri.init({
+    Series.init({
         title: {
             type: DataTypes.STRING,
         },
@@ -48,7 +48,8 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {
         sequelize,
-        modelName: "Seri",
+        modelName: "Series",
+        tableName: "Series",
     });
-    return Seri;
+    return Series;
 };
