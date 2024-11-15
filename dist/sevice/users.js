@@ -48,6 +48,7 @@ exports.handleUser = {
     })),
     login: ({ password, email }) => new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         try {
+            console.log("check username and password :::: ", password, email);
             const user = yield User.findOne({ where: { email: email } });
             if (user) {
                 const isChecked = bcrypt_1.default.compareSync(password, user.password);

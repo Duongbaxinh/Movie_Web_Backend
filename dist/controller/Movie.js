@@ -19,9 +19,10 @@ const models_1 = __importDefault(require("../models"));
 const express_async_handler_1 = __importDefault(require("express-async-handler"));
 exports.ControllerMovie = {
     searchMovie: (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log("chkkkk::::", req.query);
         const { data } = yield sevice_1.handleMovie.searchFilm(req.query);
         res.status(200).json({
-            response: data,
+            metadata: data,
         });
     })),
     getAllMovie: (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

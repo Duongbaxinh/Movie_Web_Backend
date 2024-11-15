@@ -30,6 +30,7 @@ const handleDeleteFile_1 = require("../handle/handleDeleteFile");
 const { Movie, FileVideo, FileImage } = models_1.default;
 exports.handleMovie = {
     searchFilm: ({ name, limit, ofset }) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log("check name movie ::: ", name);
         try {
             const queryOptions = { raw: true, nest: true };
             const queryCondition = {};
